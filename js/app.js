@@ -17,9 +17,9 @@ form.addEventListener("submit", function (event) {
 	// Prevent default behaviour
 	event.preventDefault();
 	if (
-		validateTextField(userName) &&
-		validateEmailField(userEmail) &&
-		validateNumericField(userNumber) &&
+		validateTextField(userName) ||
+		validateEmailField(userEmail) ||
+		validateNumericField(userNumber) ||
 		validateAlphaNumSpecialField(userPassword)
 	) {
 		console.log("Successful");
@@ -149,6 +149,119 @@ function setValidMsg(field) {
 	errors[field.name] = `${field.name} is not valid!!`;
 	field.nextElementSibling.innerText = errors[field.name];
 	addClass(field.nextElementSibling, "error-msg");
+}
+
+// check is upper
+
+function isUpper(char) {
+	if ((char >= "A" && char <= "Z") || char == " ") {
+		return true;
+	} else return false;
+}
+
+function isLower(char) {
+	if ((char >= "a" && char <= "z") || char == " ") {
+		return true;
+	} else return false;
+}
+
+// check if numaric
+function isNumber(char) {
+	if (typeof char == "number") {
+		return true;
+	} else return false;
+}
+
+function isSpecialChar(char) {
+	let specialChars = "@_.";
+
+	if (specialChars.indexOf(char) != -1 && char != "") {
+		return true;
+	}
+	return false;
+}
+
+function isStringOnlyWithLetter(str) {
+	let len = str.length;
+	str = str.toLowerCase();
+	for (let i = 0; i < len; i++) {
+		if (!isLower(str[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function isStringOnlyWithNumber(str) {
+	let len = str.length;
+
+	for (let i = 0; i < len; i++) {
+		if (!isNumber(+str[i]) || isNaN(+str[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function isStringContainsLetterNumber(str) {
+	let len = str.length;
+	let letter = 0,
+		num = 0;
+	str = str.toLowerCase();
+	for (let i = 0; i < len; i++) {
+		if (isLower(str[i])) {
+			letter++;
+		} else if (isNumber(+str[i])) {
+			num++;
+		}
+	}
+
+	if (letter > 0 && num > 0) return true;
+	else return false;
+}
+
+function isStringContainsLetterNumberSpecialchar(str) {
+	let len = str.length;
+	let letter = 0,
+		num = 0,
+		special = 0;
+	str = str.toLowerCase();
+	for (let i = 0; i < len; i++) {
+		if (isLower(str[i])) {
+			letter++;
+		} else if (isNumber(+str[i])) {
+			num++;
+		} else if (isSpecialChar(str[i])) {
+			special++;
+		}
+	}
+
+	if (letter > 0 && num > 0) return true;
+	else return false;
+}
+
+function isEmail(str) {
+	// check for @
+	let atSymbol = str.indexOf("@");
+	if (atSymbol < 1) return false;
+
+	let dot = str.indexOf(".");
+	if (dot <= atSymbol + 2) return false;
+
+	// check that the dot is not at the end
+	if (dot === str.length - 1) return false;
+
+	return true;
+}
+function isStringContainsNumber(str) {
+	let len = str.length;
+	str = str.toLowerCase();
+	for (let i = 0; i < len; i++) {
+		if (isLower(str[i])) {
+			return true;
+		}
+	}
+	return false;
 }
 // check regex
 function containsCharacters(field, code) {
