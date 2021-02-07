@@ -236,7 +236,7 @@ function isStringContainsLetterNumberSpecialchar(str) {
 		}
 	}
 
-	if (letter > 0 && num > 0) return true;
+	if (letter > 0 && num > 0 && special > 0) return true;
 	else return false;
 }
 
