@@ -37,7 +37,7 @@ function validateTextField(field) {
 		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
-	} else if (!containsCharacters(field, 1)) {
+	} else if (!isStringOnlyWithLetter(field.value)) {
 		setValidMsg(field);
 		removeClass(field, "valid");
 		addClass(field, "invalid");
@@ -56,7 +56,7 @@ function validateNumericField(field) {
 		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
-	} else if (!containsCharacters(field, 6)) {
+	} else if (!isStringOnlyWithNumber(field.value)) {
 		setValidMsg(field);
 		removeClass(field, "valid");
 		addClass(field, "invalid");
@@ -75,7 +75,7 @@ function validateEmailField(field) {
 		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
-	} else if (!containsCharacters(field, 5)) {
+	} else if (!isEmail(field.value)) {
 		setValidMsg(field);
 		removeClass(field, "valid");
 		addClass(field, "invalid");
@@ -94,7 +94,7 @@ function validateAlphaNumField(field) {
 		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
-	} else if (!containsCharacters(field, 2)) {
+	} else if (!isStringContainsLetterNumber(field.value)) {
 		setValidMsg(field);
 		removeClass(field, "valid");
 		addClass(field, "invalid");
@@ -113,7 +113,7 @@ function validateAlphaNumSpecialField(field) {
 		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
-	} else if (!containsCharacters(field, 4)) {
+	} else if (!isStringContainsLetterNumberSpecialchar(field.value)) {
 		setValidMsg(field);
 		removeClass(field, "valid");
 		addClass(field, "invalid");
@@ -263,57 +263,57 @@ function isStringContainsNumber(str) {
 	}
 	return false;
 }
-// check regex
-function containsCharacters(field, code) {
-	let regEx;
-	switch (code) {
-		case 1:
-			// letters
-			regEx = /(?=.*[a-zA-Z])/;
-			return matchWithRegEx(regEx, field, "Must contain at least one letter");
-		case 2:
-			// letter and numbers
-			regEx = /(?=.*\d)(?=.*[a-zA-Z])/;
-			return matchWithRegEx(
-				regEx,
-				field,
-				"Must contain at least one letter and one number",
-			);
-		case 3:
-			// uppercase, lowercase and number
-			regEx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
-			return matchWithRegEx(
-				regEx,
-				field,
-				"Must contain at least one uppercase, one lowercase letter and one number",
-			);
-		case 4:
-			// uppercase, lowercase, number and special char
-			regEx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
-			return matchWithRegEx(
-				regEx,
-				field,
-				"Must contain at least one uppercase, one lowercase letter, one number and one special character",
-			);
-		case 5:
-			// Email pattern
-			regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-			return matchWithRegEx(regEx, field, "Must be a valid email address");
-		case 6:
-			regEx = /^\d+$/;
-			return matchWithRegEx(regEx, field, "All should be numeric");
+// // check regex
+// function containsCharacters(field, code) {
+// 	let regEx;
+// 	switch (code) {
+// 		case 1:
+// 			// letters
+// 			regEx = /(?=.*[a-zA-Z])/;
+// 			return matchWithRegEx(regEx, field, "Must contain at least one letter");
+// 		case 2:
+// 			// letter and numbers
+// 			regEx = /(?=.*\d)(?=.*[a-zA-Z])/;
+// 			return matchWithRegEx(
+// 				regEx,
+// 				field,
+// 				"Must contain at least one letter and one number",
+// 			);
+// 		case 3:
+// 			// uppercase, lowercase and number
+// 			regEx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
+// 			return matchWithRegEx(
+// 				regEx,
+// 				field,
+// 				"Must contain at least one uppercase, one lowercase letter and one number",
+// 			);
+// 		case 4:
+// 			// uppercase, lowercase, number and special char
+// 			regEx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
+// 			return matchWithRegEx(
+// 				regEx,
+// 				field,
+// 				"Must contain at least one uppercase, one lowercase letter, one number and one special character",
+// 			);
+// 		case 5:
+// 			// Email pattern
+// 			regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// 			return matchWithRegEx(regEx, field, "Must be a valid email address");
+// 		case 6:
+// 			regEx = /^\d+$/;
+// 			return matchWithRegEx(regEx, field, "All should be numeric");
 
-		default:
-			return false;
-	}
-}
-function matchWithRegEx(regEx, field, message) {
-	if (field.value.match(regEx)) {
-		return true;
-	} else {
-		return false;
-	}
-}
+// 		default:
+// 			return false;
+// 	}
+// }
+// function matchWithRegEx(regEx, field, message) {
+// 	if (field.value.match(regEx)) {
+// 		return true;
+// 	} else {
+// 		return false;
+// 	}
+// }
 
 // file validation
 function validateImage(field) {
