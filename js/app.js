@@ -34,10 +34,12 @@ form.addEventListener("submit", function (event) {
 function validateTextField(field) {
 	if (isEmpty(field)) {
 		setEmptyMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else if (!containsCharacters(field, 1)) {
 		setValidMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else {
@@ -51,10 +53,12 @@ function validateTextField(field) {
 function validateNumericField(field) {
 	if (isEmpty(field)) {
 		setEmptyMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else if (!containsCharacters(field, 6)) {
 		setValidMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else {
@@ -68,10 +72,12 @@ function validateNumericField(field) {
 function validateEmailField(field) {
 	if (isEmpty(field)) {
 		setEmptyMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else if (!containsCharacters(field, 5)) {
 		setValidMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else {
@@ -85,10 +91,12 @@ function validateEmailField(field) {
 function validateAlphaNumField(field) {
 	if (isEmpty(field)) {
 		setEmptyMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else if (!containsCharacters(field, 2)) {
 		setValidMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else {
@@ -102,10 +110,12 @@ function validateAlphaNumField(field) {
 function validateAlphaNumSpecialField(field) {
 	if (isEmpty(field)) {
 		setEmptyMsg(field);
-		addClass(field, "empty");
+		removeClass(field, "valid");
+		addClass(field, "invalid");
 		return false;
 	} else if (!containsCharacters(field, 4)) {
 		setValidMsg(field);
+		removeClass(field, "valid");
 		addClass(field, "invalid");
 		return false;
 	} else {
@@ -189,6 +199,30 @@ function matchWithRegEx(regEx, field, message) {
 		return true;
 	} else {
 		return false;
+	}
+}
+
+// file validation
+function validateImage(field) {
+	let validExtensions = ["jpg", "png", "jpeg"]; //array of valid extensions
+
+	let fileName = field.files.length != 0 ? field.files[0].name : "";
+	var fileNameExt = fileName.substr(fileName.lastIndexOf(".") + 1);
+
+	// view box
+	let imageShow = document.getElementById("user-input__image--view");
+
+	if (validExtensions.indexOf(fileNameExt) == -1) {
+		imageShow.setAttribute("src", "");
+		alert("Only these file types are accepted : " + validExtensions.join(", "));
+	} else {
+		if (field.files && field.files[0]) {
+			var filerdr = new FileReader();
+			filerdr.onload = function (e) {
+				imageShow.setAttribute("src", e.target.result);
+			};
+			filerdr.readAsDataURL(field.files[0]);
+		}
 	}
 }
 

@@ -74,6 +74,28 @@
 					<p class="form-text text-muted"></p>
 				</div>
 
+				<div class="form-group">
+					<label for="user-input__image">Upload Your Image</label>
+					<div>
+						<img
+							id="user-input__image--view"
+							height="130"
+							width="130"
+							style="border: solid"
+						/>
+					</div>
+					<input
+						type="file"
+						class="form-control-file"
+						name="image"
+						id="user-input__image"
+						placeholder=""
+						aria-describedby="fileHelpId"
+						onchange="validateImage(this)"
+					/>
+					<p class="form-text text-muted"></p>
+				</div>
+
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
